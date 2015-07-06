@@ -79,12 +79,39 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // Rewriting this to be simpler
+      var pieceCounter = 0;// Count number of pieces that we find.
+
+      // Get the length of the row
+      var row = this.get(rowIndex);
+      var length = row.length;
+
+      // Iterate over the entire row.
+      for (var i = 0; i < length; i++) {
+        console.log("Checking location: " + i + " Found value: " + row[i]);
+
+        // Check if we've found a first piece
+        if (row[i] === 1) {
+          console.log('Found a piece in the row!');
+          pieceCounter++;
+        }
+      }
+
+      return (pieceCounter > 1);
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // Get number of rows on the board.
+      var numRows = this.rows().length;
+
+      for (var i = 0; i < numRows; i++) {
+        if (this.hasRowConflictAt(i) === true) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
@@ -94,11 +121,33 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // Get number of rows on the board.
+      var numRows = this.rows().length;
+
+      var pieceCounter = 0; // Count number of pieces that we find.
+
+      // Loop through the column and determine if we have mulitple pieces.
+      for (var i = 0; i < numRows; i++) {
+        var curRow = this.get(i);
+
+        if (curRow[colIndex] === 1) {
+          pieceCounter++;
+        }
+      }
+
+      return (pieceCounter > 1);
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var numCols = this.get(0).length;
+
+      for (var i = 0; i < numCols; i++) {
+        if (this.hasColConflictAt(i) === true) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
