@@ -168,11 +168,11 @@
         for (; y < maxCols; y++) {
           if (that.get(x)[y] === 1) {
             count++;
-            x++;
             if (count > 1) {
               return true;
             }
-          }  
+          }
+          x++;  
         }
         return count > 1;
       }
