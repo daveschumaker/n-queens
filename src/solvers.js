@@ -31,12 +31,11 @@ window.findNRooksSolution = function(n) {
     //var tempRow = [];
     // Generate columns within row:
     for (var x = 0; x < curRow.length; x++) {
-      if (!solutionBoard.hasAnyColConflicts()) {
-        console.log("HAS NO COL CONFLICTS");
-      }
-      if (!solutionBoard.hasAnyRooksConflicts()) {
+      solutionBoard.togglePiece(i,x);
+
+      if (solutionBoard.hasAnyRooksConflicts()) {
         console.log("Changing value at row: " + i + " col: " + x);
-        solutionBoard.togglePiece(i,x);
+        solutionBoard.togglePiece(i,x);  
       }
     }
   }
