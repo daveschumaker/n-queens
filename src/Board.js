@@ -166,13 +166,15 @@
 
       var checkDiagonal = function(x, y) {
         for (; y < maxCols; y++) {
-          if (that.get(x)[y] === 1) {
-            count++;
-            if (count > 1) {
-              return true;
+          if (that.get(x) !== undefined) {
+            if (that.get(x)[y] === 1) {
+              count++;
+              if (count > 1) {
+                return true;
+              }
             }
+            x++;  
           }
-          x++;  
         }
         return count > 1;
       }
