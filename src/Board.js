@@ -68,6 +68,7 @@
      / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
      \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
      |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
+
      */
     /*=========================================================================
      =                 TODO: fill in these Helper Functions                    =
@@ -156,89 +157,44 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow, initialRow) {
-      var row = initialRow || 0;
-      var maxRows = this.rows().length - 1;
-      var count = 0;
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var maxCols = this.rows().length;
+      var maxIndex = maxCols - 1;
+      var y = majorDiagonalColumnIndexAtFirstRow;
       var that = this;
-      var col = majorDiagonalColumnIndexAtFirstRow;
-      var checkDiag = function(row, col) {
-        if (count > 1) {
-          //count = 0;
-          return true;
-        }
+      var count = 0;
 
-        if (col === maxRows + 1 || row === maxRows + 1) {
-          count = 0;
-          console.log("Stopping...");
-          console.log("Stop row: " + row + " col: " + col);
-          return;
+      var checkDiagonal = function(x, y) {
+        for (; y < maxCols; y++) {
+          if (that.get(x) !== undefined) {
+            if (that.get(x)[y] === 1) {
+              count++;
+              if (count > 1) {
+                return true;
+              }
+            }
+          }
+          x++;
         }
-        console.log("Checking out Row: " + row + " Col: " + col);
-
-        if (that.get(row)[col] === 1) {
-          count++;
-        }
-
-        checkDiag(row + 1, col + 1);
+        return count > 1;
       };
-
-      checkDiag(row,  col);
-      return (count > 1); // fixme
+      return checkDiagonal(0, majorDiagonalColumnIndexAtFirstRow);
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var count = 0;
+      var maxCols = this.rows().length;
+      var maxIndex = maxCols - 1;
+      var startIndex = -maxIndex + 1;
 
-      var startLocs = []; // Location of starting spots [row, col]
-      var maxColIndex = this.rows().length - 1;
-      var maxRowIndex = maxColIndex
-
-      for (var i = maxRowIndex - 1; i >= 0; i--) {
-        startLocs.push([i, 0]);
-      }
-
-      for (var i = 1; i <= maxColIndex - 1; i++) {
-        startLocs.push([0,i]);
-      }
-
-      var hasReachedMiddle = false;
-
-      for (var i = 0; i < startLocs.length; i++) {
-        console.log(startLocs[i]);
-
-        var row = startLocs[i][0];
-        var col = startLocs[i][1];
-
-        if (this.hasMajorDiagonalConflictAt(col, row) == true) {
+      for (var i = startIndex; i < maxIndex; i++) {
+        if (this.hasMajorDiagonalConflictAt(i) === true) {
           return true;
         }
       }
 
-
-
-
-
-
-
-      console.log(startLocs);
-
-
-
-
-
-      /*
-       var count = 0;
-       var maxCols = this.rows().length;
-       var subRoutine = function() {
-       }
-       for (var i = 0; i < maxCols; i++) {
-       if (this.hasMajorDiagonalConflictAt(i) === true) {
-       return true;
-       }
-       }
-       return false; // fixme
-       */
+      return false; // fixme
     },
 
 
@@ -248,11 +204,43 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var maxCols = this.rows().length;
+      var y = minorDiagonalColumnIndexAtFirstRow; //starts at 1
+      var that = this;
+      var count = 0;
+
+      var checkDiagonal = function(x, y) {
+        for (; x < maxCols; x++) {
+          if (that.get(x) !== undefined) {
+            if (that.get(x)[y] === 1) {
+              count++;
+              if (count > 1) {
+                return true;
+              }
+            }
+          }
+          y--;
+        }
+        return count > 1;
+      };
+      return checkDiagonal(0, minorDiagonalColumnIndexAtFirstRow)
+
+
+
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var count = 0;
+      var maxCols = this.rows().length;
+      var maxIndex = maxCols + 1;
+      var startIndex = 1;
+
+      for (var i = startIndex; i <= maxIndex; i++) {
+        if (this.hasMinorDiagonalConflictAt(i) === true) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
@@ -270,3 +258,9 @@
   };
 
 }());
+
+
+
+
+
+
