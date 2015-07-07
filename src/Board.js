@@ -140,7 +140,9 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      var numCols = this.get(0).length;
+      if (this.get(0) !== undefined) {
+        var numCols = this.get(0).length;
+      }
 
       for (var i = 0; i < numCols; i++) {
         if (this.hasColConflictAt(i) === true) {
