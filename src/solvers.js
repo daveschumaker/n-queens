@@ -1,9 +1,10 @@
 /*           _
- ___  ___ | |_   _____ _ __ ___
- / __|/ _ \| \ \ / / _ \ '__/ __|
- \__ \ (_) | |\ V /  __/ |  \__ \
- |___/\___/|_| \_/ \___|_|  |___/
- */
+   ___  ___ | |_   _____ _ __ ___
+  / __|/ _ \| \ \ / / _ \ '__/ __|
+  \__ \ (_) | |\ V /  __/ |  \__ \
+  |___/\___/|_| \_/ \___|_|  |___/
+*/
+
 
 // hint: you'll need to do a full-search of all possible arrangements of pieces!
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
@@ -34,6 +35,7 @@ window.findNRooksSolution = function(n) {
       solutionBoard.togglePiece(i,x);
 
       if (solutionBoard.hasAnyRooksConflicts()) {
+
         solutionBoard.togglePiece(i,x);
       }
     }

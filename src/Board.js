@@ -178,6 +178,7 @@
         }
         return count > 1;
       };
+
       return checkDiagonal(0, majorDiagonalColumnIndexAtFirstRow);
     },
 
@@ -189,6 +190,7 @@
       var startIndex = -maxIndex + 1;
 
       for (var i = startIndex; i < maxIndex; i++) {
+
         if (this.hasMajorDiagonalConflictAt(i) === true) {
           return true;
         }
@@ -224,9 +226,6 @@
         return count > 1;
       };
       return checkDiagonal(0, minorDiagonalColumnIndexAtFirstRow)
-
-
-
     },
 
     // test if any minor diagonals on this board contain conflicts
@@ -256,11 +255,5 @@
       });
     });
   };
-
 }());
-
-
-
-
-
 
