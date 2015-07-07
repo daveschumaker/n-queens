@@ -173,10 +173,11 @@
                 return true;
               }
             }
+            x++;
+          } else {
+            return count > 1;
           }
-          x++;
         }
-        return count > 1;
       };
 
       return checkDiagonal(0, majorDiagonalColumnIndexAtFirstRow);
@@ -190,7 +191,6 @@
       var startIndex = -maxIndex + 1;
 
       for (var i = startIndex; i < maxIndex; i++) {
-
         if (this.hasMajorDiagonalConflictAt(i) === true) {
           return true;
         }
@@ -220,10 +220,11 @@
                 return true;
               }
             }
+            y--;
+          } else {
+            return count > 1;
           }
-          y--;
         }
-        return count > 1;
       };
       return checkDiagonal(0, minorDiagonalColumnIndexAtFirstRow)
     },
