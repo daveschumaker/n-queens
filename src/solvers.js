@@ -34,13 +34,11 @@ window.findNRooksSolution = function(n) {
       solutionBoard.togglePiece(i,x);
 
       if (solutionBoard.hasAnyRooksConflicts()) {
-        console.log("Changing value at row: " + i + " col: " + x);
         solutionBoard.togglePiece(i,x);  
       }
     }
   }
 
-  console.log(solutionBoard);
   var solution = solutionBoard.rows();
   // var solution = [
   //   [1,0,0,0],
