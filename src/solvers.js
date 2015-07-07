@@ -3,7 +3,6 @@
   / __|/ _ \| \ \ / / _ \ '__/ __|
   \__ \ (_) | |\ V /  __/ |  \__ \
   |___/\___/|_| \_/ \___|_|  |___/
-
 */
 
 // hint: you'll need to do a full-search of all possible arrangements of pieces!
@@ -11,10 +10,53 @@
 // take a look at solversSpec.js to see what the tests are expecting
 
 
-// return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
+// return a matrix (an array of arrays) representing a single nxn chessboard, 
+// with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  //var solution = undefined; //fixme
+  var solution = [];
+  var solutionBoard = new Board({n: n});
+  //console.log('solution board:')
+  //console.log(solutionBoard);
+  // generate rows
+
+  if (n === 1) {
+    return solution = [[1]];
+  }
+
+  for (var i = 0; i < solutionBoard.rows().length; i++) {
+    // i = current row
+    var curRow = solutionBoard.get(i);
+    //var tempRow = [];
+    // Generate columns within row:
+    for (var x = 0; x < curRow.length; x++) {
+      if (!solutionBoard.hasAnyColConflicts()) {
+        console.log("HAS NO COL CONFLICTS");
+      }
+      if (!solutionBoard.hasAnyRooksConflicts()) {
+        console.log("Changing value at row: " + i + " col: " + x);
+        solutionBoard.togglePiece(i,x);
+      }
+    }
+  }
+
+  console.log(solutionBoard);
+  var solution = solutionBoard.rows();
+  // var solution = [
+  //   [1,0,0,0],
+  //   [0,1,0,0],
+  //   [0,0,1,0],
+  //   [0,0,0,1]
+  // ];
+
+  // var to count number of spaces on board
+
+  // Get length of rows / columns (n)
+
+  // set first element [0,0] to 1
+
+
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
