@@ -88,11 +88,11 @@
 
       // Iterate over the entire row.
       for (var i = 0; i < length; i++) {
-        console.log("Checking location: " + i + " Found value: " + row[i]);
+        //console.log("Checking location: " + i + " Found value: " + row[i]);
 
         // Check if we've found a first piece
         if (row[i] === 1) {
-          console.log('Found a piece in the row!');
+          //console.log('Found a piece in the row!');
           pieceCounter++;
         }
       }
@@ -157,36 +157,84 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      var row = 0;
-      var maxRows = this.rows().length;
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow, initialRow) {
+      var row = initialRow || 0;
+      var maxRows = this.rows().length - 1;
       var count = 0;
       var that = this;
       var col = majorDiagonalColumnIndexAtFirstRow;
-      var checkDiag = function(row, col, found) {  
-        if (col === maxRows + 1 || row === maxRows) {
+      var checkDiag = function(row, col) {
+        if (count > 1) {
+          //count = 0;
+          return true;
+        }
+
+        if (col === maxRows + 1 || row === maxRows + 1) {
+          count = 0;
+          console.log("Stopping...");
+          console.log("Stop row: " + row + " col: " + col);
           return;
         }
+        console.log("Checking out Row: " + row + " Col: " + col);
+
         if (that.get(row)[col] === 1) {
           count++;
-          found = true;
         } 
-        if (found === true) {
-           checkDiag(row + 1, col + 1, true);    
-         } else {
-          checkDiag(row, col + 1, false);
-         }
-
+        
+        checkDiag(row + 1, col + 1);    
       };
 
-      checkDiag(row, col, false);    
+      checkDiag(row,  col);    
       return (count > 1); // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
-    hasAnyMajorDiagonalConflicts: function() {
+    hasAnyMajorDiagonalConflicts: function() {  
+
+    var startLocs = []; // Location of starting spots [row, col]
+    var maxColIndex = this.rows().length - 1;
+    var maxRowIndex = maxColIndex
+
+    for (var i = maxRowIndex - 1; i >= 0; i--) {
+      startLocs.push([i, 0]);
+    }
+
+    for (var i = 1; i <= maxColIndex - 1; i++) {
+      startLocs.push([0,i]);
+    }
+    
+    var hasReachedMiddle = false;
+
+    for (var i = 0; i < startLocs.length; i++) {
+      console.log(startLocs[i]);
+
+      var row = startLocs[i][0];
+      var col = startLocs[i][1];
+
+      if (this.hasMajorDiagonalConflictAt(col, row) == true) {
+        return true;
+      } 
+    }
+
+
+
+
+
+
+
+    console.log(startLocs);
+
+
+
+
+
+      /*
       var count = 0;
       var maxCols = this.rows().length;
+
+      var subRoutine = function() {
+
+      }
 
       for (var i = 0; i < maxCols; i++) {
         if (this.hasMajorDiagonalConflictAt(i) === true) {
@@ -195,6 +243,7 @@
       }
 
       return false; // fixme
+    */
     },
 
 
